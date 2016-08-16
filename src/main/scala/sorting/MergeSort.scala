@@ -10,7 +10,7 @@ object MergeSort {
      * @tparam T -- element type for which an Ordering[T] should be available
      * @return
      */
-    def mergeSortedLists[T : Ordering](xs : List[T], ys : List[T], acc : List[T]) : List[T] = {
+    def mergeSortedLists[T : Ordering](xs : List[T], ys : List[T], acc : List[T] = Nil) : List[T] = {
         (xs, ys) match {
             case (Nil, _) => (ys.reverse ++ acc).reverse
             case (_, Nil) => (xs.reverse ++ acc).reverse
@@ -31,12 +31,10 @@ object MergeSort {
      */
     private def mergeImpl[T : Ordering](output : List[List[T]], input : List[T]) : List[List[T]] =
     {
-        val ordering = implicitly[Ordering[T]]
-
         if (output.head == Nil)
             input :: output.tail
         else {
-            Nil :: mergeImpl(output.tail, mergeSortedLists(output.head, input, List.empty[T]))
+            Nil :: mergeImpl(output.tail, mergeSortedLists(output.head, input))
         }
     }
 
@@ -47,7 +45,7 @@ object MergeSort {
     {
         val built = xs.foldLeft(List.empty[List[T]]){ (acc,x) => mergeImpl[T](acc, x :: Nil) }
         
-        built.foldLeft(List.empty[T]){ (acc, x) => mergeSortedLists(acc, x, List.empty[T]) }
+        built.foldLeft(List.empty[T]){ (acc, x) => mergeSortedLists(acc, x) }
     }
 
 
