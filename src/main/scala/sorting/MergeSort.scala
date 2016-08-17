@@ -31,7 +31,9 @@ object MergeSort {
      */
     private def mergeImpl[T : Ordering](output : List[List[T]], input : List[T]) : List[List[T]] =
     {
-        if (output.head == Nil)
+        if (output == Nil)
+            input :: Nil
+        else if (output.head == Nil)
             input :: output.tail
         else {
             Nil :: mergeImpl(output.tail, mergeSortedLists(output.head, input))
