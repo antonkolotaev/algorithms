@@ -62,22 +62,31 @@ object QuickSort {
     object Pivot {
 
         def leftmost[T](array : Array[T], lo : Int, hi : Int) = array(lo)
+        def rightmost[T](array : Array[T], lo : Int, hi : Int) = array(hi - 1)
 
         private val rnd = new scala.util.Random
 
         def random[T](array : Array[T], lo : Int, hi : Int) = array(lo + rnd.nextInt(hi - lo))
 
+
+
     }
 
     def leftmostPartition[T : Ordering](array: Array[T], lo : Int, hi : Int) =
         if (lo < hi)
-            partition(array, lo, hi, Pivot.leftmost[T](array, lo, hi))
+            partition(array, lo, hi, Pivot.leftmost(array, lo, hi))
+        else
+            0
+
+    def rightmostPartition[T : Ordering](array: Array[T], lo : Int, hi : Int) =
+        if (lo < hi)
+            partition(array, lo, hi, Pivot.rightmost(array, lo, hi))
         else
             0
 
     def randomPartition[T : Ordering](array: Array[T], lo : Int, hi : Int) =
         if (lo < hi)
-            partition(array, lo, hi, Pivot.random[T](array, lo, hi))
+            partition(array, lo, hi, Pivot.random(array, lo, hi))
         else
             0
 }
