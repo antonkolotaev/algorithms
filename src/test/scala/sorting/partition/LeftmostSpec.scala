@@ -1,7 +1,7 @@
-package sorting.partition
+package sorting
+package partition
 
 import org.scalatest._
-import sorting._
 
 class LeftmostSpec extends FunSpec with Base  {
 
