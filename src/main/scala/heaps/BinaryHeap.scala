@@ -20,7 +20,7 @@ class BinaryHeap[T : Ordering](elements : Seq[T]) {
         xs(j) = t
     }
 
-    def heapify(i : Int) : Unit = {
+    private def bubbleDown(i : Int) : Unit = {
 
         val l = left(i)
         val r = right(i)
@@ -34,13 +34,13 @@ class BinaryHeap[T : Ordering](elements : Seq[T]) {
 
         if (i != smallest) {
             swap(i, smallest)
-            heapify(smallest)
+            bubbleDown(smallest)
         }
     }
 
     if (xs.length > 1)
         for (i <- parent(xs.length - 1) to (0, -1))
-            heapify(i)
+            bubbleDown(i)
 
 
     def verify() = {
@@ -67,6 +67,18 @@ class BinaryHeap[T : Ordering](elements : Seq[T]) {
         xs append x
         bubbleUp(xs.length - 1)
     }
+
+    def pop() : T = {
+        if (xs.isEmpty)
+            throw new Exception(s"popping from empty heap")
+        val ret = xs.head
+        xs(0) = xs(xs.length - 1)
+        xs.remove(xs.length - 1) // or more idiomatic way to say xs.pop_back()
+        bubbleDown(0)
+        ret
+    }
+
+    def nonEmpty = xs.nonEmpty
 
     override def toString = xs mkString ("[",",","]")
 }
