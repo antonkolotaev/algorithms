@@ -28,10 +28,19 @@ object QuickSort {
         impl(0, array.length)
     }
 
-    def partition[T](pivot : (Array[T], Int, Int, Ordering[T]) => T)
-                    (array: Array[T], lo : Int, hi : Int, ordering : Ordering[T]) : Int =
+    /**
+     * Partitions somehow array[lo until hi] on two parts: the left one is less than 'p' and the right one is greater or equal to 'p'
+     * @param array - array to be partitioned
+     * @param lo - low inclusive index of the subarray in 'array' to be partitioned
+     * @param hi - high exclusive index of the subarray in 'array' to be partitioned
+     * @param p - pivot
+     * @return position of the partition k:
+     *              all lo <= i < k, k <= j < hi: array[i] < array[j]
+     */
+    def partition[T : Ordering](array: Array[T], lo : Int, hi : Int, p : T) : Int =
     {
-        val p = pivot(array, lo, hi, ordering)
+        val ordering = implicitly[Ordering[T]]
+
         var i = lo
         var j = hi - 1
         while (i < j) {
@@ -52,13 +61,23 @@ object QuickSort {
 
     object Pivot {
 
-        def leftmost[T](array : Array[T], lo : Int, hi : Int, ordering : Ordering[T]) = array(lo)
+        def leftmost[T](array : Array[T], lo : Int, hi : Int) = array(lo)
+
+        private val rnd = new scala.util.Random
+
+        def random[T](array : Array[T], lo : Int, hi : Int) = array(lo + rnd.nextInt(hi - lo))
 
     }
 
-    def leftmostPartition[T](array: Array[T], lo : Int, hi : Int, ordering : Ordering[T]) =
+    def leftmostPartition[T : Ordering](array: Array[T], lo : Int, hi : Int) =
         if (lo < hi)
-            partition(Pivot.leftmost[T])(array, lo, hi, ordering)
+            partition(array, lo, hi, Pivot.leftmost[T](array, lo, hi))
+        else
+            0
+
+    def randomPartition[T : Ordering](array: Array[T], lo : Int, hi : Int) =
+        if (lo < hi)
+            partition(array, lo, hi, Pivot.random[T](array, lo, hi))
         else
             0
 }
