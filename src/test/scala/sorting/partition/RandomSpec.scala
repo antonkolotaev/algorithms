@@ -1,8 +1,9 @@
-package sorting
+package sorting.partition
 
 import org.scalatest._
+import sorting._
 
-class RandomPartitionSpec extends FunSpec with Base  {
+class RandomSpec extends FunSpec with Base  {
 
     for (i <- 0 to 100) {
         val array = randomInts(i).toArray

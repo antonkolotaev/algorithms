@@ -1,8 +1,9 @@
-package sorting
+package sorting.partition
 
 import org.scalatest._
+import sorting._
 
-class RightmostPartitionSpec extends FunSpec with Base  {
+class RightmostSpec extends FunSpec with Base  {
 
 
     for (i <- 0 to 100) {
