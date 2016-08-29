@@ -1,8 +1,8 @@
 package sorting
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FunSpec, Matchers, FlatSpec}
 
-class MergeSortSpec extends FlatSpec with Matchers {
+class MergeSortSpec extends FunSpec with Matchers {
 
     def checkMergeSort[T : Ordering](input : List[T]) = {
 
@@ -15,22 +15,11 @@ class MergeSortSpec extends FlatSpec with Matchers {
     }
 
 
-    "empty list" should "be sorted" in {
-
-        checkMergeSort(List.empty[Int])
-
-    }
-
-    "sorted list" should "be left as is" in {
-
-        checkMergeSort(List(1,2,3))
-
-    }
-
-    "unsorted list" should "be sorted" in {
-
-        checkMergeSort(List(5,2,1,9,7,0,7))
-
+    for (i <- 0 to 100) {
+        val lst = randomInts(i).toList
+        it (s"checking [${lst mkString ","}]") {
+            checkMergeSort(lst)
+        }
     }
 
 }
