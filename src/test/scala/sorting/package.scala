@@ -4,8 +4,8 @@ package object sorting {
 
     val random = new scala.util.Random
 
-    def randomInts(n: Int) =
-        Stream.continually(random.nextInt % 50).take(n)
+    def randomInts(n: Int, upperBound : Int = 50) =
+        Stream.continually(random.nextInt % upperBound).take(n)
 
     trait Base extends Matchers {
         def checkPartition[T: Ordering](partition: (Array[T], Int, Int) => Int)(array: Array[T]) = {

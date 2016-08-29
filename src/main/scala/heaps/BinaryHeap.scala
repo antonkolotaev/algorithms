@@ -52,4 +52,21 @@ class BinaryHeap[T : Ordering](elements : Seq[T]) {
                     assert(ordering.lteq(xs(i), xs(right(i))))
             }
     }
+
+    private def bubbleUp(i : Int) : Unit = {
+        if (i > 0) {
+            val p = parent(i)
+            if (!ordering.lteq(xs(p), xs(i))) {
+                swap(p, i)
+                bubbleUp(p)
+            }
+        }
+    }
+
+    def insert(x : T) = {
+        xs append x
+        bubbleUp(xs.length - 1)
+    }
+
+    override def toString = xs mkString ("[",",","]")
 }
